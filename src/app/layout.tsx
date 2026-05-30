@@ -4,8 +4,8 @@ import "./globals.css";
 
 const display = IBM_Plex_Mono({
   variable: "--font-display",
-  subsets: ['latin'],
-  weight: ["100", '200', '300', '400', '500', '600', '700'],
+  subsets: ["latin"],
+  weight: ["100", "200", "300", "400", "500", "600", "700"],
 });
 
 const body = Manrope({
@@ -34,8 +34,34 @@ export default function RootLayout({
       lang="en"
       className={`${display.variable} ${body.variable} ${handwritten.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <svg className="absolute w-0 h-0" aria-hidden="true">
+          <defs>
+            <filter
+              id="rough-sketch-filter"
+              x="-10%"
+              y="-10%"
+              width="120%"
+              height="120%"
+            >
+              <feTurbulence
+                type="fractalNoise"
+                baseFrequency="0.05"
+                numOctaves="4"
+                result="noise"
+              />
+              <feDisplacementMap
+                in="SourceGraphic"
+                in2="noise"
+                scale="3"
+                xChannelSelector="R"
+                yChannelSelector="G"
+              />
+            </filter>
+          </defs>
+        </svg>
+        {children}
+      </body>
     </html>
   );
 }
-

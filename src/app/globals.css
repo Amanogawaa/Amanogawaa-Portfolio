@@ -16,13 +16,15 @@
   --color-foreground: var(--eco-ink);
   --font-sans: var(--font-display);
   --font-mono: var(--font-body);
-  --font-hand: var(--font-handwritten);
 }
 
 body {
-  background: var(--eco-base);
   color: var(--eco-ink);
   font-family: var(--font-body), sans-serif;
+  background-size: 30px 30px;
+  background-image:
+    linear-gradient(to right, rgba(31, 42, 36, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(31, 42, 36, 0.04) 1px, transparent 1px);
 }
 
 .font-handwritten {
