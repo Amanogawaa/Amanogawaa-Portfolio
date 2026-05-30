@@ -241,6 +241,11 @@ export default function Home() {
     useState<string>("exp-kloud");
   const [isLoading, setIsLoading] = useState(true);
   const [currentSection, setCurrentSection] = useState(0); // 0 = Intro, 1 = Projects, 2 = Experience
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Global scroll gesture detection (trackpad horizontal swipe & vertical scroll on grid background)
   useEffect(() => {
@@ -344,6 +349,19 @@ export default function Home() {
       window.removeEventListener("touchend", handleTouchEnd);
     };
   }, [isLoading, currentSection]);
+
+  if (!mounted) {
+    return (
+      <div
+        style={{
+          backgroundColor: "#f7f3ea",
+          position: "fixed",
+          inset: 0,
+          zIndex: 9999,
+        }}
+      />
+    );
+  }
 
   return (
     <>
