@@ -1,22 +1,17 @@
 import type { Metadata } from "next";
-import { IBM_Plex_Mono, Manrope, Architects_Daughter } from "next/font/google";
 import "./globals.css";
+import { Manrope, Inter } from "next/font/google";
+import { cn } from "@/lib/utils";
+import { ThemeProvider } from "@/components/theme.provider";
 
-const display = IBM_Plex_Mono({
-  variable: "--font-display",
+const manropeHeading = Manrope({
   subsets: ["latin"],
-  weight: ["100", "200", "300", "400", "500", "600", "700"],
+  variable: "--font-manrope",
 });
 
-const body = Manrope({
-  variable: "--font-body",
+const inter = Inter({
   subsets: ["latin"],
-});
-
-const handwritten = Architects_Daughter({
-  variable: "--font-handwritten",
-  subsets: ["latin"],
-  weight: "400",
+  variable: "--font-inter",
 });
 
 export const metadata: Metadata = {
@@ -32,35 +27,24 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${display.variable} ${body.variable} ${handwritten.variable} h-full antialiased`}
+      className={cn(
+        "h-full",
+        "antialiased",
+        "font-sans",
+        inter.variable,
+        manropeHeading.variable,
+      )}
+      suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col">
-        <svg className="absolute w-0 h-0" aria-hidden="true">
-          <defs>
-            <filter
-              id="rough-sketch-filter"
-              x="-10%"
-              y="-10%"
-              width="120%"
-              height="120%"
-            >
-              <feTurbulence
-                type="fractalNoise"
-                baseFrequency="0.05"
-                numOctaves="4"
-                result="noise"
-              />
-              <feDisplacementMap
-                in="SourceGraphic"
-                in2="noise"
-                scale="3"
-                xChannelSelector="R"
-                yChannelSelector="G"
-              />
-            </filter>
-          </defs>
-        </svg>
-        {children}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );
