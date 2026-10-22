@@ -239,7 +239,7 @@ export default function Home() {
     useState<string>("proj-course");
   const [activeExpWindowId, setActiveExpWindowId] =
     useState<string>("exp-kloud");
-  const [isLoading, setIsLoading] = useState(true);
+  // const [, set] = useState(true);
   const [currentSection, setCurrentSection] = useState(0); // 0 = Intro, 1 = Projects, 2 = Experience
   const [mounted, setMounted] = useState(false);
 
@@ -249,8 +249,6 @@ export default function Home() {
 
   // Global scroll gesture detection (trackpad horizontal swipe & vertical scroll on grid background)
   useEffect(() => {
-    if (isLoading) return;
-
     let lastScrollTime = 0;
     const scrollCooldown = 900; // Cooldown to slide exactly one section per swipe
 
@@ -290,12 +288,10 @@ export default function Home() {
 
     window.addEventListener("wheel", handleWheel, { passive: true });
     return () => window.removeEventListener("wheel", handleWheel);
-  }, [isLoading, currentSection]);
+  }, [, currentSection]);
 
   // Global Keyboard Arrow Key navigation (ArrowLeft & ArrowRight)
   useEffect(() => {
-    if (isLoading) return;
-
     const handleKeyDown = (e: KeyboardEvent) => {
       // Ignore keypresses if user is typing in an input
       const activeTag = document.activeElement?.tagName.toLowerCase();
@@ -310,12 +306,10 @@ export default function Home() {
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isLoading, currentSection]);
+  }, [currentSection]);
 
   // Global Mobile Touch Swipe gesture detection
   useEffect(() => {
-    if (isLoading) return;
-
     let touchStartX = 0;
     let touchStartY = 0;
 
@@ -348,7 +342,7 @@ export default function Home() {
       window.removeEventListener("touchstart", handleTouchStart);
       window.removeEventListener("touchend", handleTouchEnd);
     };
-  }, [isLoading, currentSection]);
+  }, [, currentSection]);
 
   if (!mounted) {
     return (
@@ -365,8 +359,8 @@ export default function Home() {
 
   return (
     <>
-      <AnimatePresence mode="wait">
-        {isLoading && (
+      {/* <AnimatePresence mode="wait">
+        { && (
           <motion.div
             key="loader"
             initial={{ opacity: 1 }}
@@ -378,86 +372,14 @@ export default function Home() {
             }}
             className="fixed inset-0 z-50"
           >
-            <LoadingScreen onComplete={() => setIsLoading(false)} />
+            <LoadingScreen onComplete={() => set(false)} />
           </motion.div>
         )}
-      </AnimatePresence>
-
-      {/* Viewport-wide Hand-Drawn Screen Border Frame (Not constrained by max-w-7xl) */}
-      <AnimatePresence>
-        {!isLoading && (
-          <motion.svg
-            width="100%"
-            height="100%"
-            viewBox="0 0 100 100"
-            preserveAspectRatio="none"
-            fill="none"
-            style={{ filter: "url(#rough-sketch-filter)" }}
-            className="fixed inset-0 z-50 text-[var(--eco-moss)] pointer-events-none overflow-visible"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-          >
-            <g stroke="currentColor" fill="none">
-              {/* Top outline (Double stroke) */}
-              <path
-                d="M -0.5,0.6 Q 50,0.2 100.5,0.6"
-                strokeWidth="2.2"
-                vectorEffect="non-scaling-stroke"
-              />
-              <path
-                d="M -0.2,0.3 Q 50,-0.1 100.2,0.3"
-                strokeWidth="0.8"
-                opacity="0.5"
-                vectorEffect="non-scaling-stroke"
-              />
-
-              {/* Right outline (Double stroke) */}
-              <path
-                d="M 99.4,-0.5 Q 99.8,50 99.4,100.5"
-                strokeWidth="2.2"
-                vectorEffect="non-scaling-stroke"
-              />
-              <path
-                d="M 99.7,-0.2 Q 100.1,50 99.7,100.2"
-                strokeWidth="0.8"
-                opacity="0.5"
-                vectorEffect="non-scaling-stroke"
-              />
-
-              {/* Bottom outline (Double stroke) */}
-              <path
-                d="M 100.5,99.4 Q 50,99.8 -0.5,99.4"
-                strokeWidth="2.2"
-                vectorEffect="non-scaling-stroke"
-              />
-              <path
-                d="M 100.2,99.7 Q 50,100.1 -0.2,99.7"
-                strokeWidth="0.8"
-                opacity="0.5"
-                vectorEffect="non-scaling-stroke"
-              />
-
-              {/* Left outline (Double stroke) */}
-              <path
-                d="M 0.6,-0.5 Q 0.2,50 0.6,100.5"
-                strokeWidth="2.2"
-                vectorEffect="non-scaling-stroke"
-              />
-              <path
-                d="M 0.3,-0.2 Q -0.1,50 0.3,100.2"
-                strokeWidth="0.8"
-                opacity="0.5"
-                vectorEffect="non-scaling-stroke"
-              />
-            </g>
-          </motion.svg>
-        )}
-      </AnimatePresence>
+      </AnimatePresence> */}
 
       {/* Sketched Floating Navigation menu Dock */}
       <AnimatePresence>
-        {!isLoading && (
+        {
           <motion.div
             initial={{ y: 60, x: "-50%", opacity: 0 }}
             animate={{ y: 0, x: "-50%", opacity: 1 }}
@@ -505,27 +427,18 @@ export default function Home() {
               <span>EXPERIENCE</span>
             </button>
           </motion.div>
-        )}
+        }
       </AnimatePresence>
 
       {/* SECTION 01: INTRODUCTION */}
       <motion.main
         className="fixed inset-0 z-40 flex flex-row items-stretch justify-between text-[var(--eco-ink)] select-none overflow-hidden font-sans w-full max-w-7xl mx-auto p-10 pb-24"
         initial={{ opacity: 0, x: 0 }}
-        animate={
-          !isLoading
-            ? {
-                opacity: currentSection === 0 ? 1 : 0,
-                x:
-                  currentSection === 0
-                    ? 0
-                    : currentSection > 0
-                      ? "-100vw"
-                      : "100vw",
-                pointerEvents: currentSection === 0 ? "auto" : "none",
-              }
-            : {}
-        }
+        animate={{
+          opacity: currentSection === 0 ? 1 : 0,
+          x: currentSection === 0 ? 0 : currentSection > 0 ? "-100vw" : "100vw",
+          pointerEvents: currentSection === 0 ? "auto" : "none",
+        }}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
       >
         {/* LEFT COLUMN: Widescreen Typography & Portfolio Info */}
@@ -638,20 +551,11 @@ export default function Home() {
       <motion.section
         className="fixed inset-0 z-40 flex flex-row items-stretch justify-between text-[var(--eco-ink)] select-none overflow-hidden font-sans w-full max-w-7xl mx-auto p-10 pb-24"
         initial={{ opacity: 0, x: "100vw" }}
-        animate={
-          !isLoading
-            ? {
-                opacity: currentSection === 1 ? 1 : 0,
-                x:
-                  currentSection === 1
-                    ? 0
-                    : currentSection > 1
-                      ? "-100vw"
-                      : "100vw",
-                pointerEvents: currentSection === 1 ? "auto" : "none",
-              }
-            : {}
-        }
+        animate={{
+          opacity: currentSection === 1 ? 1 : 0,
+          x: currentSection === 1 ? 0 : currentSection > 1 ? "-100vw" : "100vw",
+          pointerEvents: currentSection === 1 ? "auto" : "none",
+        }}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
       >
         {/* LEFT COLUMN: Scrollable works ledger */}
@@ -715,53 +619,17 @@ export default function Home() {
             ))}
           </div>
         </div>
-
-        {/* RIGHT COLUMN: Full-Height side-docked Canvas Panel (Second Layer) */}
-        <div
-          ref={containerRef2}
-          className="relative h-full aspect-[614/1091] bg-slate-900/40 border border-slate-300 shadow-2xl overflow-hidden cursor-crosshair select-none flex-shrink-0"
-        >
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
-
-          <img
-            src="drawing3.jpg"
-            alt="Sketch Background Projects"
-            draggable="false"
-            className="absolute top-0 left-0 max-w-none h-full aspect-[614/1091] origin-top-left pointer-events-none"
-            width={614}
-            height={1091}
-          />
-
-          {PROJECTS_WINDOWS.map((win) => (
-            <DraggableWindow
-              key={win.id}
-              config={win}
-              containerRef={containerRef2}
-              isActive={activeProjWindowId === win.id}
-              onFocus={() => setActiveProjWindowId(win.id)}
-            />
-          ))}
-        </div>
       </motion.section>
 
       {/* SECTION 03: EXPERIENCE */}
       <motion.section
         className="fixed inset-0 z-40 flex flex-row items-stretch justify-between text-[var(--eco-ink)] select-none overflow-hidden font-sans w-full max-w-7xl mx-auto p-10 pb-24"
         initial={{ opacity: 0, x: "100vw" }}
-        animate={
-          !isLoading
-            ? {
-                opacity: currentSection === 2 ? 1 : 0,
-                x:
-                  currentSection === 2
-                    ? 0
-                    : currentSection > 2
-                      ? "-100vw"
-                      : "100vw",
-                pointerEvents: currentSection === 2 ? "auto" : "none",
-              }
-            : {}
-        }
+        animate={{
+          opacity: currentSection === 2 ? 1 : 0,
+          x: currentSection === 2 ? 0 : currentSection > 2 ? "-100vw" : "100vw",
+          pointerEvents: currentSection === 2 ? "auto" : "none",
+        }}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
       >
         {/* LEFT COLUMN: Scrollable experience ledger */}
@@ -813,33 +681,6 @@ export default function Home() {
               </div>
             ))}
           </div>
-        </div>
-
-        {/* RIGHT COLUMN: Full-Height side-docked Canvas Panel (Third Layer) */}
-        <div
-          ref={containerRef3}
-          className="relative h-full aspect-[614/1091] bg-slate-900/40 border border-slate-300 shadow-2xl overflow-hidden cursor-crosshair select-none flex-shrink-0"
-        >
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
-
-          <img
-            src="drawing1.jpg"
-            alt="Sketch Background Experience"
-            draggable="false"
-            className="absolute top-0 left-0 max-w-none h-full aspect-[614/1091] origin-top-left pointer-events-none"
-            width={614}
-            height={1091}
-          />
-
-          {EXPERIENCE_WINDOWS.map((win) => (
-            <DraggableWindow
-              key={win.id}
-              config={win}
-              containerRef={containerRef3}
-              isActive={activeExpWindowId === win.id}
-              onFocus={() => setActiveExpWindowId(win.id)}
-            />
-          ))}
         </div>
       </motion.section>
     </>
