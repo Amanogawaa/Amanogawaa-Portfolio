@@ -1,0 +1,8 @@
+pmOnFail: ignore
+
+minimumReleaseAgeExclude:
+  - '@next/*'
+  - next
+  - framer-motion@14.9.0
+  - motion-dom@14.9.0
+  - motion@14.9.0
