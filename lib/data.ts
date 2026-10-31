@@ -16,7 +16,7 @@ export const projects = [
     description:
       "EcoChain is a community resource-sharing platform that helps people donate reusable items, request needed supplies, coordinate local handoffs, and verify exchanges with an Avalanche-compatible proof flow.",
     stack: "Next.js · Convex · Mapbox ·  Avalanche Fuji ",
-    link: "https://ecochain.vercel.app",
+    link: "",
     github: "https://github.com/Amanogawaa/ecochain",
   },
   {
@@ -26,7 +26,7 @@ export const projects = [
     description:
       "AttendEase is a role-based event management and attendance tracking application that helps students, organizers, and admins manage events end-to-end—from planning and registration to attendance validation, feedback, and performance insights.",
     stack: "Angular · PHP · MySQL",
-    link: "https://attendease.vercel.app",
+    link: "",
     github: "https://github.com/Amanogawaa/attendease",
   },
   {
@@ -36,7 +36,7 @@ export const projects = [
     description:
       "An intelligent, fully automated customer support agent built for small and medium businesses. SmartDesk understands customer questions, searches your knowledge base, calls the right tools, scores its own confidence, and escalates to a human when it's unsure — all running 24/7 at zero cost.",
     stack: "Next.js · ExpressJS · PGVector · Gemini API · n8n ",
-    link: "https://smartdesk.vercel.app",
+    link: "",
     github: "https://github.com/Amanogawaa/smartdesk",
   },
   {
@@ -46,7 +46,7 @@ export const projects = [
     description:
       "A Godot 4 action game prototype where the player moves through a 3D arena, aims with the mouse, and fights waves of enemy mobs using firearms. It includes core systems like player controls, enemy AI/pathfinding, health/combat, and configurable enemy spawners, with plans for train-defense and procedural world features.",
     stack: "Godot4 · GDScript",
-    link: "https://smartdesk.vercel.app",
+    link: "",
     github: "https://github.com/Amanogawaa/iron_express",
   },
 ];

@@ -172,57 +172,84 @@ export function Portfolio() {
                 2022 — 2026
               </span>
             </div>
-            <div className="grid gap-px overflow-hidden md:grid-cols-6">
-              {projects.map((project, index) => {
-                const isLastRow = index >= 3;
-
-                return (
-                  <article
-                    key={project.number}
-                    className={`
-          group flex min-h-90 flex-col bg-background p-7 border border-border  transition-colors 
-          hover:bg-muted/40 lg:p-8
-          md:col-span-2
-          ${index === 3 ? "md:col-start-2" : ""}   /* 4th item starts at column 2 */
-          ${index === 4 ? "md:col-start-4" : ""}   /* 5th item starts at column 4 */
-        `}
-                  >
+            <div className="grid gap-px overflow-hidden  md:grid-cols-6">
+              {projects.map((project, index) => (
+                <article
+                  key={project.number}
+                  className={`
+        group flex min-h-90 flex-col bg-background p-7 transition-colors border border-border
+        hover:bg-muted/40 lg:p-8
+        md:col-span-2
+        ${index === 3 ? "md:col-start-2" : ""}
+        ${index === 4 ? "md:col-start-4" : ""}
+      `}
+                >
+                  {/* Top section */}
+                  <div className="flex items-start justify-between gap-3">
                     <span className="text-sm text-muted-foreground">
                       {project.number}
                     </span>
-                    <div className="mt-auto">
-                      <h3 className="text-2xl font-medium tracking-[-0.04em]">
-                        {project.title}
-                      </h3>
-                      <p className="mt-4 text-sm leading-6 text-muted-foreground">
-                        {project.description}
-                      </p>
-                      <p className="mt-6 text-xs uppercase tracking-[0.12em] text-muted-foreground">
-                        {project.stack}
-                      </p>
-                      <div className="mt-8 flex gap-5 text-sm">
+
+                    {/* Status badge */}
+                    <span
+                      className={`
+            rounded-full px-2.5 py-0.5 text-[11px] font-medium uppercase tracking-wide
+            ${
+              project.status === "Live"
+                ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"
+                : project.status === "In Progress"
+                  ? "bg-amber-500/10 text-amber-600 dark:text-amber-400"
+                  : "bg-muted text-muted-foreground"
+            }
+          `}
+                    >
+                      {project.status}
+                    </span>
+                  </div>
+
+                  <div className="mt-5">
+                    <h3 className="text-2xl font-medium tracking-[-0.04em]">
+                      {project.title}
+                    </h3>
+                    <p className="mt-4 text-sm leading-6 text-muted-foreground">
+                      {project.description}
+                    </p>
+                  </div>
+
+                  {/* Bottom section (always pushed to the bottom) */}
+                  <div className="mt-auto pt-8">
+                    <p className="text-xs uppercase tracking-[0.12em] text-muted-foreground">
+                      {project.stack}
+                    </p>
+
+                    <div className="mt-6 flex gap-5 text-sm">
+                      {project.status === "Live" ? (
                         <Link
                           href={project.link}
                           target="_blank"
-                          rel="noopener noreferrer"
                           className="inline-flex items-center gap-1 font-medium hover:underline"
                         >
-                          Live demo{" "}
+                          Live demo
                           <ArrowUpRight size={14} aria-hidden="true" />
                         </Link>
-                        <Link
-                          href={project.github}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1 text-muted-foreground hover:text-foreground hover:underline"
-                        >
-                          GitHub <ArrowUpRight size={14} aria-hidden="true" />
-                        </Link>
-                      </div>
+                      ) : (
+                        <span className="inline-flex items-center gap-1 text-muted-foreground">
+                          Live demo
+                        </span>
+                      )}
+
+                      <Link
+                        href={project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 text-muted-foreground hover:text-foreground hover:underline"
+                      >
+                        GitHub <ArrowUpRight size={14} aria-hidden="true" />
+                      </Link>
                     </div>
-                  </article>
-                );
-              })}
+                  </div>
+                </article>
+              ))}
             </div>
           </FadeIn>
         </section>
